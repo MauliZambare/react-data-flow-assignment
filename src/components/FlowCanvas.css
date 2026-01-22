@@ -1,0 +1,53 @@
+/* Container for flow canvas */
+.flow-container {
+  height: 500px;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+/* Add Node button */
+.add-node-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-node-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Custom nodes styling */
+.custom-node {
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: 2px solid #007bff;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  max-width: 200px;
+  text-align: center;
+}
+
+.custom-node:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border-color: #0056b3;
+  background-color: #e6f0ff;
+}
