@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import "./PostsList.css";
+import { useTranslation } from 'react-i18next';
 
 function PostsList() {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { t } = useTranslation();
 
   // Search
   const [searchText, setSearchText] = useState("");
@@ -20,7 +22,6 @@ function PostsList() {
   // 🔹 Fetch or load from cache
   useEffect(() => {
     const cachedData = localStorage.getItem(CACHE_KEY);
-
     if (cachedData) {
       const data = JSON.parse(cachedData);
       setPosts(data);
@@ -84,63 +85,67 @@ function PostsList() {
 
   if (loading) {
     return (
-      <div className="center">
-        <div className="spinner"></div>
-        <p>Loading posts...</p>
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+        <div className="spinner-border text-primary" role="status">
+          <span className="sr-only">{t("Loading posts...")}</span>
+        </div>
+        <p className="ml-2">{t("Loading posts...")}</p>
       </div>
     );
   }
 
   if (error) {
-    return <h3 className="error">{error}</h3>;
+    return <h3 className="text-danger text-center mt-5">{error}</h3>;
   }
 
   return (
-    <div className="container">
-      <h2 className="heading">📄 Posts Dashboard</h2>
+    <div className="container mt-4">
+      <h2 className="text-primary mb-4">📄 {t("Posts Dashboard")}</h2>
 
-      <div className="top-bar">
+      <div className="d-flex justify-content-between mb-3">
         <input
           type="text"
-          placeholder="Search by title..."
+          placeholder={t("Search by title...")}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          className="search-input"
+          className="form-control w-50"
         />
 
-        <button className="refresh-btn" onClick={refreshData}>
-          🔄 Refresh
+        <button className="btn btn-outline-primary" onClick={refreshData}>
+          🔄 {t("Refresh")}
         </button>
       </div>
 
-      <ul className="list">
+      <ul className="list-group">
         {currentPosts.map((post) => (
-          <li key={post.id} className="card">
-            <span className="post-id">#{post.id}</span>
+          <li key={post.id} className="list-group-item d-flex justify-content-between align-items-center">
+            <span className="badge badge-primary badge-pill mr-3">#{post.id}</span>
             <h4>{post.title}</h4>
           </li>
         ))}
       </ul>
 
       {filteredPosts.length === 0 && (
-        <p className="no-data">No matching posts found</p>
+        <p className="text-center text-muted mt-3">{t("No matching posts found")}</p>
       )}
 
-      <div className="pagination">
+      <div className="d-flex justify-content-center mt-4">
         <button
+          className="btn btn-outline-secondary mr-2"
           disabled={currentPage === 1}
           onClick={() => setCurrentPage(currentPage - 1)}
         >
-          ◀ Prev
+          ◀ {t("Prev")}
         </button>
 
-        <span>Page {currentPage}</span>
+        <span className="align-self-center">{t("Page")} {currentPage}</span>
 
         <button
+          className="btn btn-outline-secondary ml-2"
           disabled={indexOfLastPost >= filteredPosts.length}
           onClick={() => setCurrentPage(currentPage + 1)}
         >
-          Next ▶
+          {t("Next")} ▶
         </button>
       </div>
     </div>
